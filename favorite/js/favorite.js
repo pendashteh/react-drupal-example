@@ -15,9 +15,19 @@ class Favorite extends Component {
       user_uuid: '',
       user_uid: '0',
       node_type: '',
-      node_uuid: ''
+      node_uuid: '',
+      token: ''
     }
-    this.getData();
+    this.getToken();
+  }
+  getToken() {
+    fetch('/session/token', {}).then((response) => {
+      if (response.ok) {
+        response.text().then((data) => {
+          this.state.token = data
+        })
+      }
+    });
   }
   
   getData() {
@@ -64,7 +74,8 @@ class Favorite extends Component {
       credentials: 'include',
       headers: {
         'Accept': 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json'
+        'Content-Type': 'application/vnd.api+json',
+        'X-CSRF-Token': this.state.token
       },
       body: JSON.stringify({
         "data": [
