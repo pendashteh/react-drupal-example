@@ -58,7 +58,8 @@ class Favorite extends Component {
     });
   }
   
-  toggleFavorite() {
+  toggleFavorite(e) {
+    e.preventDefault()
     var favorited = !this.state.favorited;
     this.saveFavorite(favorited);
   }
